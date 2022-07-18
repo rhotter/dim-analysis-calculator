@@ -1,0 +1,31 @@
+{
+  "name": "physics-calculator",
+  "version": "5.0.0",
+  "private": true,
+  "browserslist": [
+    ">0.25%",
+    "not dead"
+  ],
+  "dependencies": {
+    "@edtr-io/mathquill": "^0.11.0",
+    "@emotion/react": "latest",
+    "@emotion/server": "latest",
+    "@emotion/styled": "latest",
+    "@mui/material": "latest",
+    "@unified-latex/unified-latex-util-parse": "^1.0.12",
+    "gatsby": "latest",
+    "gatsby-plugin-react-helmet": "latest",
+    "jquery": "^3.6.0",
+    "peggy": "^2.0.1",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-helmet": "latest",
+    "react-mathquill": "^1.0.2"
+  },
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
+  }
+}
