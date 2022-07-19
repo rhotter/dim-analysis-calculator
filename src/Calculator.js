@@ -7,7 +7,7 @@ x simplfy units
 
 */
 
-import React, { createRef, useState } from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import "./Calculator.css";
 // import EditableMathField from "./EditableMathField";
@@ -37,27 +37,27 @@ const getSupportedUnits = () => {
     H: { kg: 1, m: 2, s: -2, A: -2 },
   };
   const units = baseUnits.concat(Object.keys(extendedUnits));
-  const siPrefixes = [
-    "y",
-    "z",
-    "a",
-    "f",
-    "p",
-    "n",
-    "m",
-    "c",
-    "d",
-    "da",
-    "h",
-    "k",
-    "M",
-    "G",
-    "T",
-    "P",
-    "E",
-    "Z",
-    "Y",
-  ];
+  // const siPrefixes = [
+  //   "y",
+  //   "z",
+  //   "a",
+  //   "f",
+  //   "p",
+  //   "n",
+  //   "m",
+  //   "c",
+  //   "d",
+  //   "da",
+  //   "h",
+  //   "k",
+  //   "M",
+  //   "G",
+  //   "T",
+  //   "P",
+  //   "E",
+  //   "Z",
+  //   "Y",
+  // ];
   // for (const prefix of siPrefixes) {
   //   for (const unit of units) {
   //     units.push(prefix + unit);
@@ -101,9 +101,9 @@ export default function Calculator() {
   const keyboardShortcuts = (e) => {
     if (e.metaKey && e.key === "Backspace") {
       setLatex("");
-    } else if (e.metaKey && e.key == "ArrowLeft") {
+    } else if (e.metaKey && e.key === "ArrowLeft") {
       topMathField.moveToLeftEnd();
-    } else if (e.metaKey && e.key == "ArrowRight") {
+    } else if (e.metaKey && e.key === "ArrowRight") {
       topMathField.moveToRightEnd();
     }
   };
