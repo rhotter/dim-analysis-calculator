@@ -188,6 +188,7 @@ function peg$parse(input, options) {
   var peg$c14 = "\\right";
   var peg$c15 = ".";
   var peg$c16 = "\\operatorname{";
+  var peg$c17 = "\\ ";
 
   var peg$r0 = /^[0-9]/;
   var peg$r1 = /^[a-zA-Z]/;
@@ -215,6 +216,7 @@ function peg$parse(input, options) {
   var peg$e19 = peg$classExpectation([["a", "z"], ["A", "Z"]], false, false);
   var peg$e20 = peg$otherExpectation("whitespace");
   var peg$e21 = peg$classExpectation([" ", "\t", "\n", "\r"], false, false);
+  var peg$e22 = peg$literalExpectation("\\ ", false);
 
   var peg$f0 = function() {return null};
   var peg$f1 = function(head, tail) {
@@ -258,12 +260,12 @@ return {
   var peg$f8 = function(expr) { return expr; };
   var peg$f9 = function(x, u) {
   const units = {};
-  if (u!==null) units[u] = 1;
+  if (u) units[u] = 1;
   return {number: x, units: units}
   };
   var peg$f10 = function(u) {
   const units = {};
-  if (u!==null) units[u] = 1;
+  if (u) units[u] = 1;
   return {number: 1, units: units}
   };
   var peg$f11 = function(x) {
@@ -933,7 +935,7 @@ return {
   }
 
   function peg$parseNumber() {
-    var s0, s1, s2, s3, s4;
+    var s0, s1, s2, s3, s4, s5;
 
     peg$silentFails++;
     s0 = peg$currPos;
@@ -945,6 +947,7 @@ return {
       if (s4 === peg$FAILED) {
         s4 = null;
       }
+      s5 = peg$parse_();
       peg$savedPos = s0;
       s0 = peg$f9(s2, s4);
     } else {
@@ -956,6 +959,7 @@ return {
       s1 = peg$parse_();
       s2 = peg$parseUnit();
       if (s2 !== peg$FAILED) {
+        s3 = peg$parse_();
         peg$savedPos = s0;
         s0 = peg$f10(s2);
       } else {
@@ -1116,6 +1120,15 @@ return {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$e21); }
     }
+    if (s1 === peg$FAILED) {
+      if (input.substr(peg$currPos, 2) === peg$c17) {
+        s1 = peg$c17;
+        peg$currPos += 2;
+      } else {
+        s1 = peg$FAILED;
+        if (peg$silentFails === 0) { peg$fail(peg$e22); }
+      }
+    }
     while (s1 !== peg$FAILED) {
       s0.push(s1);
       if (peg$r2.test(input.charAt(peg$currPos))) {
@@ -1124,6 +1137,15 @@ return {
       } else {
         s1 = peg$FAILED;
         if (peg$silentFails === 0) { peg$fail(peg$e21); }
+      }
+      if (s1 === peg$FAILED) {
+        if (input.substr(peg$currPos, 2) === peg$c17) {
+          s1 = peg$c17;
+          peg$currPos += 2;
+        } else {
+          s1 = peg$FAILED;
+          if (peg$silentFails === 0) { peg$fail(peg$e22); }
+        }
       }
     }
     peg$silentFails--;

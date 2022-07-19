@@ -80,13 +80,13 @@ Left = ("\\left")?
 Right = ("\\right")?
 
 Number "number"
-  = _ x:ActualNumber _ u:Unit? {
+  = _ x:ActualNumber _ u:Unit? _ {
   const units = {};
-  if (u!==null) units[u] = 1;
+  if (u) units[u] = 1;
   return {number: x, units: units}
-  } / _ u: Unit {
+  } / _ u: Unit _ {
   const units = {};
-  if (u!==null) units[u] = 1;
+  if (u) units[u] = 1;
   return {number: 1, units: units}
   }
 
@@ -97,4 +97,4 @@ ActualNumber = x:([0-9]+("."?)[0-9]*) {
 Unit = "\\operatorname{" u:([a-zA-Z]+) "}" {return u.join("")}
 
 _ "whitespace"
-  = [ \t\n\r]*
+  = ([ \t\n\r] / "\\ ")*
