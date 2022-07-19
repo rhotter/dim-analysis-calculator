@@ -7,7 +7,6 @@
     "not dead"
   ],
   "dependencies": {
-    "@edtr-io/mathquill": "^0.11.0",
     "@emotion/react": "latest",
     "@emotion/server": "latest",
     "@emotion/styled": "latest",
@@ -20,7 +19,7 @@
     "react": "latest",
     "react-dom": "latest",
     "react-helmet": "latest",
-    "react-mathquill": "^1.0.2"
+    "react-mathquill": "github:rhotter/react-mathquill"
   },
   "scripts": {
     "develop": "gatsby develop",

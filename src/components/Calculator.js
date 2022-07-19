@@ -1,9 +1,9 @@
 /*
 TODOs:
 - render with katex
-- support more units
-- simplfy units
-- publish to the web 
+- publish to the web
+x support more units
+x simplfy units 
 
 */
 
@@ -11,11 +11,12 @@ import React, { createRef, useState } from "react";
 import styled from "@emotion/styled";
 import "./Calculator.css";
 // import EditableMathField from "./EditableMathField";
-import "../../node_modules/@edtr-io/mathquill/build/mathquill.css";
-import { EditableMathField } from "react-mathquill";
+import { EditableMathField, addStyles } from "react-mathquill";
 // import { parse } from "@unified-latex/unified-latex-util-parse";
 import { parse } from "./parser";
 import { Container } from "@mui/material";
+
+addStyles();
 
 const getSupportedUnits = () => {
   const baseUnits = ["s", "m", "kg", "A", "mol", "cd"];
