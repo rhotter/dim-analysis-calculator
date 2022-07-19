@@ -1,10 +1,11 @@
-import * as React from "react";
+// import "./App.css";
+import React from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Calculator from "../components/Calculator";
+import Calculator from "./Calculator";
 
-export default function Index() {
+function App() {
   return (
     <Container maxWidth="sm">
       <Box sx={{ my: 10 }}>
@@ -16,3 +17,5 @@ export default function Index() {
     </Container>
   );
 }
+
+export default App;

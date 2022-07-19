@@ -1,30 +1,44 @@
 {
   "name": "physics-calculator",
-  "version": "5.0.0",
+  "version": "0.1.0",
   "private": true,
-  "browserslist": [
-    ">0.25%",
-    "not dead"
-  ],
   "dependencies": {
-    "@emotion/react": "latest",
-    "@emotion/server": "latest",
-    "@emotion/styled": "latest",
-    "@mui/material": "latest",
-    "@unified-latex/unified-latex-util-parse": "^1.0.12",
-    "gatsby": "latest",
-    "gatsby-plugin-react-helmet": "latest",
-    "jquery": "^3.6.0",
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
+    "@mui/material": "^5.9.0",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^13.5.0",
     "peggy": "^2.0.1",
-    "react": "latest",
-    "react-dom": "latest",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-helmet": "latest",
-    "react-mathquill": "github:rhotter/react-mathquill"
+    "react-mathquill": "github:rhotter/react-mathquill",
+    "react-scripts": "^2.1.3",
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "develop": "gatsby develop",
-    "build": "gatsby build",
-    "serve": "gatsby serve",
-    "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
