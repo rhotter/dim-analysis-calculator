@@ -70,6 +70,7 @@ const getSupportedUnits = () => {
 const { units, extendedUnits } = getSupportedUnits();
 
 const preprocess = (latex) => {
+  console.log(latex);
   for (const [unitToReplace, conversion] of Object.entries(extendedUnits)) {
     let newExpression = "";
     for (const [unit, power] of Object.entries(conversion)) {
@@ -133,7 +134,7 @@ export default function Calculator() {
           autoCommands: "pi epsilon",
           autoOperatorNames: units.join(" "),
         }}
-        style={{ fontSize: "32px" }}
+        style={{ fontSize: "32px", padding: "30px 150px" }}
       />
       <div style={{ paddingTop: "10px", textAlign: "right" }}>
         {error ? (
@@ -173,7 +174,6 @@ const Answer = ({ answer }) => {
   } else if (unitsNumerator) unitsStr = unitsNumerator;
   else if (unitsDenominator) unitsStr = `\\frac{1}{${unitsDenominator}}`;
 
-  console.log(answer.number);
   return (
     <AnswerSpan>
       <TeX math={answer.number.toString() + " " + unitsStr} />
