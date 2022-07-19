@@ -47,6 +47,7 @@ UnsignedTerm
       	number: tail.reduce(function(result, element) {
           if (element[1] === "\\cdot" || element[1] === "") { return result * element[3].number; }
           if (element[1] === "/") { return result / element[3].number; }
+          if (element[1] === "") { return result + element[3].number; }
 	  	    }, head.number),
         units: tail.reduce((result, element) => {
           if (element[1] === "\\cdot" || element[1] === "") { return combineUnits(result, element[3].units); }
@@ -89,8 +90,8 @@ Number "number"
   return {number: 1, units: units}
   }
 
-ActualNumber = x:(([0-9]+)("."?)[0-9]*) {
-	return parseFloat(x)
+ActualNumber = x:([0-9]+("."?)[0-9]*) {
+	return parseFloat(text())
 }
 
 Unit = "\\operatorname{" u:([a-zA-Z]+) "}" {return u.join("")}
