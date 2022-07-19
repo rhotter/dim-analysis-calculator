@@ -34,7 +34,13 @@ Sum
    	  }
     }
 
-Term
+Term = sign:("-"?) x:UnsignedTerm {
+return {
+	number: x.number*(sign? -1 : 1),
+    units: x.units}
+}
+
+UnsignedTerm
   = head:Factor tail:((_ ("\\cdot" / "/" / "") _ Factor)*) {
   // return product of all factors
       return {
@@ -76,14 +82,16 @@ Number "number"
   = _ x:ActualNumber _ u:Unit? {
   const units = {};
   if (u!==null) units[u] = 1;
-  return {number: parseFloat(x), units: units}
+  return {number: x, units: units}
   } / _ u: Unit {
   const units = {};
   if (u!==null) units[u] = 1;
   return {number: 1, units: units}
   }
 
-ActualNumber = x:([0-9]+("."?)[0-9]*)
+ActualNumber = x:(([0-9]+)("."?)[0-9]*) {
+	return parseFloat(x)
+}
 
 Unit = "\\operatorname{" u:([a-zA-Z]+) "}" {return u.join("")}
 
