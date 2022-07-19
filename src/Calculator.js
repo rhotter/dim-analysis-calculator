@@ -10,11 +10,12 @@ x simplfy units
 import React, { useState } from "react";
 import styled from "@emotion/styled";
 import "./Calculator.css";
-// import EditableMathField from "./EditableMathField";
 import { EditableMathField, addStyles } from "react-mathquill";
-// import { parse } from "@unified-latex/unified-latex-util-parse";
 import { parse } from "./parser";
 import { Container } from "@mui/material";
+
+import "katex/dist/katex.min.css";
+import TeX from "@matejmazur/react-katex";
 
 addStyles();
 
@@ -150,30 +151,32 @@ export default function Calculator() {
 const Answer = ({ answer }) => {
   let unitsNumerator = "",
     unitsDenominator = "";
-  for (const [unit, power] of Object.entries(answer.units)) {
+  for (let [unit, power] of Object.entries(answer.units)) {
+    unit = `\\operatorname{${unit}}`;
     if (power > 1) {
-      unitsNumerator += `${unit}^${power} `;
+      unitsNumerator += `{${unit}}^{${power}}`;
     }
     if (power === 1) {
-      unitsNumerator += unit + " ";
+      unitsNumerator += unit;
     }
     if (power < -1) {
-      unitsDenominator += `${unit}^${-power} `;
+      unitsDenominator += `{${unit}}^{${-power}}`;
     }
     if (power === -1) {
-      unitsDenominator += unit + " ";
+      unitsDenominator += unit;
     }
   }
 
   let unitsStr = "";
   if (unitsNumerator && unitsDenominator) {
-    unitsStr = `${unitsNumerator} / ${unitsDenominator}`;
+    unitsStr = `\\frac{${unitsNumerator}}{${unitsDenominator}}`;
   } else if (unitsNumerator) unitsStr = unitsNumerator;
-  else if (unitsDenominator) unitsStr = `/ ${unitsDenominator}`;
+  else if (unitsDenominator) unitsStr = `\\frac{1}{${unitsDenominator}}`;
 
+  console.log(answer.number);
   return (
     <AnswerSpan>
-      {answer.number} {unitsStr}
+      <TeX math={answer.number.toString() + " " + unitsStr} />
     </AnswerSpan>
   );
 };
