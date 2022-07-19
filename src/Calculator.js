@@ -70,7 +70,7 @@ const { units, extendedUnits } = getSupportedUnits();
 
 const preprocess = (latex) => {
   for (const [unitToReplace, conversion] of Object.entries(extendedUnits)) {
-    const newExpression = "";
+    let newExpression = "";
     for (const [unit, power] of Object.entries(conversion)) {
       newExpression += `\\operatorname{${unit}}^{${power}}`;
     }
@@ -154,13 +154,13 @@ const Answer = ({ answer }) => {
     if (power > 1) {
       unitsNumerator += `${unit}^${power} `;
     }
-    if (power == 1) {
+    if (power === 1) {
       unitsNumerator += unit + " ";
     }
     if (power < -1) {
       unitsDenominator += `${unit}^${-power} `;
     }
-    if (power == -1) {
+    if (power === -1) {
       unitsDenominator += unit + " ";
     }
   }
