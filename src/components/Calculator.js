@@ -49,6 +49,7 @@ export default function Calculator() {
         onChange={(mathField) => {
           let latexExpression = mathField.latex();
           setLatex(latexExpression);
+          console.log(latexExpression);
           let computation = compute(latexExpression);
           if ("error" in computation) {
             setError(computation.error);
@@ -77,7 +78,34 @@ export default function Calculator() {
 }
 
 const Answer = ({ answer }) => {
-  return <AnswerSpan>{answer}</AnswerSpan>;
+  let unitsNumerator = "",
+    unitsDenominator = "";
+  for (const [unit, power] of Object.entries(answer.units)) {
+    if (power > 1) {
+      unitsNumerator += `${unit}^${power}`;
+    }
+    if (power == 1) {
+      unitsNumerator += unit;
+    }
+    if (power < -1) {
+      unitsDenominator += `${unit}^${power}`;
+    }
+    if (power == -1) {
+      unitsDenominator += unit;
+    }
+  }
+
+  let unitsStr = "";
+  if (unitsNumerator && unitsDenominator) {
+    unitsStr = `${unitsNumerator} / ${unitsDenominator}`;
+  } else if (unitsNumerator) unitsStr = unitsNumerator;
+  else if (unitsDenominator) unitsStr = `/ ${unitsDenominator}`;
+
+  return (
+    <AnswerSpan>
+      {answer.number} {unitsStr}
+    </AnswerSpan>
+  );
 };
 const AnswerSpan = styled.span`
   color: gray;
