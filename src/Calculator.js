@@ -74,7 +74,7 @@ const preprocess = (latex) => {
   for (const [unitToReplace, conversion] of Object.entries(extendedUnits)) {
     let newExpression = "";
     for (const [unit, power] of Object.entries(conversion)) {
-      newExpression += `\\operatorname{${unit}}^{${power}}`;
+      newExpression += `{\\operatorname{${unit}}}^{${power}}`;
     }
     latex = latex.replace(`\\operatorname{${unitToReplace}}`, newExpression);
   }
