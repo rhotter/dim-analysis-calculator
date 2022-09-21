@@ -188,7 +188,7 @@ const Answer = ({ answer }) => {
 
   return (
     <AnswerSpan>
-      <TeX math={toScientificNotation(answer.number) + " " + unitsStr} />
+      <TeX math={"= " + toScientificNotation(answer.number) + " " + unitsStr} />
     </AnswerSpan>
   );
 };
