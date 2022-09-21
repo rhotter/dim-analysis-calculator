@@ -68,7 +68,7 @@ const getSupportedUnits = () => {
 };
 
 const constants = {
-  "\\pi": Math.PI,
+  "\\pi": `{${Math.PI}}`,
   k_B: "1.380649 \\cdot 10^{-23} \\operatorname{J} \\operatorname{K}^{-1}",
 };
 
@@ -78,7 +78,7 @@ const preprocess = (latex) => {
   console.log(latex);
   // swap constants
   for (const [name, value] of Object.entries(constants)) {
-    latex = latex.replace(name, value);
+    latex = latex.replaceAll(name, value);
   }
 
   // switch to SI units
@@ -87,7 +87,7 @@ const preprocess = (latex) => {
     for (const [unit, power] of Object.entries(conversion)) {
       newExpression += `{\\operatorname{${unit}}}^{${power}}`;
     }
-    latex = latex.replace(`\\operatorname{${unitToReplace}}`, newExpression);
+    latex = latex.replaceAll(`\\operatorname{${unitToReplace}}`, newExpression);
   }
   console.log(latex);
   return latex;
