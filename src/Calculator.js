@@ -20,7 +20,7 @@ import TeX from "@matejmazur/react-katex";
 addStyles();
 
 const getSupportedUnits = () => {
-  const baseUnits = ["s", "m", "kg", "A", "mol", "cd"];
+  const baseUnits = ["s", "m", "kg", "A", "mol", "cd", "K"];
 
   // https://en.wikipedia.org/wiki/MKS_system_of_units#Derived_units
   const extendedUnits = {
@@ -67,10 +67,21 @@ const getSupportedUnits = () => {
   return { units, extendedUnits };
 };
 
+const constants = {
+  "\\pi": Math.PI,
+  k_B: "1.380649 \\cdot 10^{-23} \\operatorname{J} \\operatorname{K}^{-1}",
+};
+
 const { units, extendedUnits } = getSupportedUnits();
 
 const preprocess = (latex) => {
   console.log(latex);
+  // swap constants
+  for (const [name, value] of Object.entries(constants)) {
+    latex = latex.replace(name, value);
+  }
+
+  // switch to SI units
   for (const [unitToReplace, conversion] of Object.entries(extendedUnits)) {
     let newExpression = "";
     for (const [unit, power] of Object.entries(conversion)) {
@@ -78,6 +89,7 @@ const preprocess = (latex) => {
     }
     latex = latex.replace(`\\operatorname{${unitToReplace}}`, newExpression);
   }
+  console.log(latex);
   return latex;
 };
 
@@ -176,10 +188,21 @@ const Answer = ({ answer }) => {
 
   return (
     <AnswerSpan>
-      <TeX math={answer.number.toString() + " " + unitsStr} />
+      <TeX math={toScientificNotation(answer.number) + " " + unitsStr} />
     </AnswerSpan>
   );
 };
+
+const toScientificNotation = (num) => {
+  const [coeff, exp] = num
+    .toExponential()
+    .split("e")
+    .map((item) => Number(item));
+
+  const roundedCoeff = Math.round(coeff * 1e4) / 1e4; // 4 decimal points
+  return `${roundedCoeff}` + (exp == 0 ? "" : `\\times 10^{${exp}}`);
+};
+
 const AnswerSpan = styled.span`
   color: gray;
   font-size: 20px;
