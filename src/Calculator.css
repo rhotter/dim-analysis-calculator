@@ -1,7 +1,10 @@
-.mq-editable-field {
+/* .mq-editable-field {
   border: none !important;
-}
+} */
 
 .mq-focused {
-  box-shadow: none !important;
+  box-shadow: inset 0 0 0 2px #2f72dc !important;
+  /* box-shadow: none !important; */
+  /* border: none !important; */
+  /* border: solid 2px #2f72dc !important; */
 }

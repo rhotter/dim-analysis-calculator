@@ -123,7 +123,7 @@ export default function Calculator() {
   };
 
   return (
-    <Container maxWidth="xs" style={{ width: "100%", textAlign: "center" }}>
+    <Container maxWidth="s" style={{ width: "100%" }}>
       <EditableMathField
         latex={latex}
         mathquillDidMount={(mathField) => {
@@ -146,7 +146,14 @@ export default function Calculator() {
           autoCommands: "pi epsilon",
           autoOperatorNames: units.join(" "),
         }}
-        style={{ fontSize: "32px", padding: "30px 150px" }}
+        style={{
+          fontSize: "20px",
+          paddingTop: "20px",
+          paddingBottom: "20px",
+          paddingLeft: "20px",
+          // paddingRight: "20px",
+          width: "calc(100% - 20px)",
+        }}
       />
       <div style={{ paddingTop: "10px", textAlign: "right" }}>
         {error ? (
@@ -204,8 +211,8 @@ const toScientificNotation = (num) => {
 };
 
 const AnswerSpan = styled.span`
-  color: gray;
-  font-size: 20px;
+  // color: gray;
+  font-size: 16spx;
 `;
 
 const Error = (error) => <ErrorSpan>Error</ErrorSpan>;
