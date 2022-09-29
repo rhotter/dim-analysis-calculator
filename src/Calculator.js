@@ -70,6 +70,10 @@ const getSupportedUnits = () => {
 const constants = {
   "\\pi": `{${Math.PI}}`,
   k_B: "1.380649 \\cdot 10^{-23} \\operatorname{J} \\operatorname{K}^{-1}",
+  "\\epsilon_0":
+    "8.85418782 \\cdot 10^{-12} {\\operatorname{m}^{-3}} {\\operatorname{kg}^{-1}} {\\operatorname{s}^4} {\\operatorname{A}^2}",
+  // "\\mu_0":
+  // "1.25663706212 \\cdot {10}^{−6} {\\operatorname{N}} {\\operatorname{A}^{−2}}",
 };
 
 const { units, extendedUnits } = getSupportedUnits();
