@@ -80,8 +80,10 @@ const { units, extendedUnits } = getSupportedUnits();
 const preprocess = (latex) => {
   console.log(latex);
 
-  // e.g. 2^3 -> 2^{3} but 2^{3} -> 2^{3}
-  latex = latex.replaceAll(/(\d+)\^(\d+)/g, "$1^{ $2 }");
+  // e.g. 2^3 -> 2^{3}
+  // e.g 2^{3} -> 2^{3}
+  // e.g \left(5\right)^2\operatorname{kg} -> \left(5\right)^{2}\operatorname{kg}
+  latex = latex.replaceAll(/\^(\d+)/g, "^{ $1 }");
 
   // swap constants
   for (const [name, value] of Object.entries(constants)) {
