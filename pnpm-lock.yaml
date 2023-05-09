@@ -26,7 +26,7 @@ dependencies:
   postcss: 8.4.23
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
-  react-mathquill: github.com/rhotter/react-mathquill/4cdfe8a8c97f1b4ed74c0c89905327ef04e5b8aa_react@18.2.0
+  react-mathquill: github.com/rhotter/react-mathquill/79d38faafeffaff0fbf345dd94233298fa402bd7_react@18.2.0
   react-scripts: 2.1.8_react@18.2.0
   tailwindcss: 3.3.2
 
@@ -11843,11 +11843,11 @@ packages:
     resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
     dev: false
 
-  github.com/rhotter/react-mathquill/4cdfe8a8c97f1b4ed74c0c89905327ef04e5b8aa_react@18.2.0:
-    resolution: {tarball: https://codeload.github.com/rhotter/react-mathquill/tar.gz/4cdfe8a8c97f1b4ed74c0c89905327ef04e5b8aa}
-    id: github.com/rhotter/react-mathquill/4cdfe8a8c97f1b4ed74c0c89905327ef04e5b8aa
+  github.com/rhotter/react-mathquill/79d38faafeffaff0fbf345dd94233298fa402bd7_react@18.2.0:
+    resolution: {tarball: https://codeload.github.com/rhotter/react-mathquill/tar.gz/79d38faafeffaff0fbf345dd94233298fa402bd7}
+    id: github.com/rhotter/react-mathquill/79d38faafeffaff0fbf345dd94233298fa402bd7
     name: react-mathquill
-    version: 1.0.2
+    version: 1.0.3
     peerDependencies:
       react: ^18.2.0
     dependencies:
