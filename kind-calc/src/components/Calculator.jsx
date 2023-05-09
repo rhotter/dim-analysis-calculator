@@ -1,3 +1,5 @@
+"use client";
+
 /*
 TODOs:
 - render with katex
@@ -11,8 +13,7 @@ import React, { useState } from "react";
 import styled from "@emotion/styled";
 import "./Calculator.css";
 import { EditableMathField, addStyles } from "react-mathquill";
-import { parse } from "../parser";
-import { Container } from "@mui/material";
+import { parse } from "../lib/parser";
 import "katex/dist/katex.min.css";
 import TeX from "@matejmazur/react-katex";
 
@@ -71,6 +72,7 @@ const constants = {
   k_B: "1.380649 \\cdot 10^{-23} \\operatorname{J} \\operatorname{K}^{-1}",
   "\\epsilon_0":
     "8.85418782 \\cdot 10^{-12} {\\operatorname{m}^{-3}} {\\operatorname{kg}^{-1}} {\\operatorname{s}^4} {\\operatorname{A}^2}",
+  // c: "299792458 \\operatorname{m} \\operatorname{s}^{-1}",
   // "\\mu_0":
   // "1.25663706212 \\cdot {10}^{−6} {\\operatorname{N}} {\\operatorname{A}^{−2}}",
 };
@@ -132,7 +134,7 @@ export default function Calculator() {
   };
 
   return (
-    <Container maxWidth="s" style={{ width: "100%" }}>
+    <div>
       <EditableMathField
         latex={latex}
         mathquillDidMount={(mathField) => {
@@ -160,8 +162,8 @@ export default function Calculator() {
           paddingTop: "20px",
           paddingBottom: "20px",
           paddingLeft: "20px",
-          // paddingRight: "20px",
-          width: "calc(100% - 20px)",
+          paddingRight: "20px",
+          width: "100%",
         }}
       />
       <div style={{ paddingTop: "10px", textAlign: "right" }}>
@@ -173,7 +175,7 @@ export default function Calculator() {
           ""
         )}
       </div>
-    </Container>
+    </div>
   );
 }
 
