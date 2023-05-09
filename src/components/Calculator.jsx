@@ -11,7 +11,7 @@ import React, { useState } from "react";
 import styled from "@emotion/styled";
 import "./Calculator.css";
 import { EditableMathField, addStyles } from "react-mathquill";
-import { parse } from "./parser";
+import { parse } from "../parser";
 import { Container } from "@mui/material";
 import "katex/dist/katex.min.css";
 import TeX from "@matejmazur/react-katex";
