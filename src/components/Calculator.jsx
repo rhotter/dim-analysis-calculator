@@ -89,12 +89,15 @@ const constants = {
 const { units, extendedUnits } = getSupportedUnits();
 
 const preprocess = (latex) => {
+  // ideally we would use a parser to do this, but this was easier
   console.log(latex);
 
-  // e.g. 2^3 -> 2^{3}
-  // e.g 2^{3} -> 2^{3}
-  // e.g \left(5\right)^2\operatorname{kg} -> \left(5\right)^{2}\operatorname{kg}
+  // add braces to exponents
   latex = latex.replaceAll(/\^(\d+)/g, "^{ $1 }");
+
+  // remove \left and \right
+  latex = latex.replaceAll("\\left", "");
+  latex = latex.replaceAll("\\right", "");
 
   // swap constants
   for (const [name, value] of Object.entries(constants)) {
@@ -141,8 +144,11 @@ export default function Calculator() {
       topMathField.moveToRightEnd();
     }
   };
-  const [isClient, setIsClient] = useState(false);
 
+  const supportedFcns = ["sin", "cos", "tan", "log", "ln", "sqrt"];
+
+  // for next js server side rendering stupidities
+  const [isClient, setIsClient] = useState(false);
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -170,7 +176,7 @@ export default function Calculator() {
           }}
           config={{
             autoCommands: "pi epsilon",
-            autoOperatorNames: units.join(" "),
+            autoOperatorNames: [...units, ...supportedFcns].join(" "),
           }}
           style={{
             fontSize: "20px",

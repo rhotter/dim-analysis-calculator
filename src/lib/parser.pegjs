@@ -58,9 +58,38 @@ UnsignedTerm
     }
 
 Factor
-  = Exp / MiniFactor / Frac
-   / Number
+  = Exp / MiniFactor / Frac / Function / Number
  
+
+Function = Sin / Cos / Tan / Log / Sqrt
+
+Sin = "\\sin" _ "(" _ expr:Expression _ ")" {
+  return {number: Math.sin(expr.number), units: expr.units};
+}
+
+Cos = "\\cos" _ "(" _ expr:Expression _ ")" {
+  return {number: Math.cos(expr.number), units: expr.units};
+}
+
+Tan = "\\tan" _ "(" _ expr:Expression _ ")" {
+  return {number: Math.tan(expr.number), units: expr.units};
+}
+
+Log = "\\log" _ "(" _ expr:Expression _ ")" {
+  if (Object.keys(expr.units).length !== 0) {
+    throw new Error("Logarithm's argument must be dimensionless");
+  }
+  return {number: Math.log(expr.number), units: {}};
+}
+
+Sqrt = "\\sqrt" _ "{" _ expr:Expression _ "}" {
+  return {
+    number: Math.sqrt(expr.number),
+    units: exponentiateUnits(expr.units, 0.5)
+  };
+}
+
+
 Frac = "\\frac{" x:Sum "}{" y:Sum "}" {
 	return {units: combineUnits(x.units, y.units, -1), number: x.number/y.number}
 }
