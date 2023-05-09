@@ -253,6 +253,7 @@ return {
 	return {units: combineUnits(x.units, y.units, -1), number: x.number/y.number}
 };
   var peg$f5 = function(x, y) {
+  // return x to the power of y
 	return {units: exponentiateUnits(x.units, y.number), number: x.number**y.number}
     };
   var peg$f6 = function(expr) { return expr; };

@@ -66,6 +66,7 @@ Frac = "\\frac{" x:Sum "}{" y:Sum "}" {
 }
 
 Exp = x:(MiniFactor / Number) "^" y:Factor {
+  // return x to the power of y
 	return {units: exponentiateUnits(x.units, y.number), number: x.number**y.number}
     }
 

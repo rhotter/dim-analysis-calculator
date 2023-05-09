@@ -13,7 +13,6 @@ import "./Calculator.css";
 import { EditableMathField, addStyles } from "react-mathquill";
 import { parse } from "./parser";
 import { Container } from "@mui/material";
-
 import "katex/dist/katex.min.css";
 import TeX from "@matejmazur/react-katex";
 
@@ -80,6 +79,10 @@ const { units, extendedUnits } = getSupportedUnits();
 
 const preprocess = (latex) => {
   console.log(latex);
+
+  // e.g. 2^3 -> 2^{3} but 2^{3} -> 2^{3}
+  latex = latex.replaceAll(/(\d+)\^(\d+)/g, "$1^{ $2 }");
+
   // swap constants
   for (const [name, value] of Object.entries(constants)) {
     latex = latex.replaceAll(name, value);
@@ -211,7 +214,7 @@ const toScientificNotation = (num) => {
     .map((item) => Number(item));
 
   const roundedCoeff = Math.round(coeff * 1e4) / 1e4; // 4 decimal points
-  return `${roundedCoeff}` + (exp == 0 ? "" : `\\times 10^{${exp}}`);
+  return `${roundedCoeff}` + (exp === 0 ? "" : `\\times 10^{${exp}}`);
 };
 
 const AnswerSpan = styled.span`
