@@ -9,15 +9,24 @@ x simplfy units
 
 */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import "./Calculator.css";
-import { EditableMathField, addStyles } from "react-mathquill";
+
+import dynamic from "next/dynamic";
+
+const DynamicEditableMathField = dynamic(
+  async () => {
+    const module = await import("react-mathquill");
+    module.addStyles(); // assuming addStyles is a function that should be executed once module is loaded
+    return module.EditableMathField;
+  },
+  { ssr: false } // This line is important. It disables server-side rendering for this component.
+);
+
 import { parse } from "../lib/parser";
 import "katex/dist/katex.min.css";
 import TeX from "@matejmazur/react-katex";
-
-addStyles();
 
 const getSupportedUnits = () => {
   const baseUnits = ["s", "m", "kg", "A", "mol", "cd", "K"];
@@ -132,40 +141,47 @@ export default function Calculator() {
       topMathField.moveToRightEnd();
     }
   };
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   return (
     <div>
-      <EditableMathField
-        latex={latex}
-        mathquillDidMount={(mathField) => {
-          mathField.focus();
-          setTopMathField(mathField);
-        }}
-        onKeyDown={(e) => keyboardShortcuts(e)}
-        onChange={(mathField) => {
-          let latexExpression = mathField.latex();
-          setLatex(latexExpression);
-          let computation = compute(latexExpression);
-          if ("error" in computation) {
-            setError(computation.error);
-          } else {
-            setAnswer(computation.answer);
-            setError(null);
-          }
-        }}
-        config={{
-          autoCommands: "pi epsilon",
-          autoOperatorNames: units.join(" "),
-        }}
-        style={{
-          fontSize: "20px",
-          paddingTop: "20px",
-          paddingBottom: "20px",
-          paddingLeft: "20px",
-          paddingRight: "20px",
-          width: "100%",
-        }}
-      />
+      {isClient ? (
+        <DynamicEditableMathField
+          latex={latex}
+          mathquillDidMount={(mathField) => {
+            mathField.focus();
+            setTopMathField(mathField);
+          }}
+          onKeyDown={(e) => keyboardShortcuts(e)}
+          onChange={(mathField) => {
+            let latexExpression = mathField.latex();
+            setLatex(latexExpression);
+            let computation = compute(latexExpression);
+            if ("error" in computation) {
+              setError(computation.error);
+            } else {
+              setAnswer(computation.answer);
+              setError(null);
+            }
+          }}
+          config={{
+            autoCommands: "pi epsilon",
+            autoOperatorNames: units.join(" "),
+          }}
+          style={{
+            fontSize: "20px",
+            paddingTop: "20px",
+            paddingBottom: "20px",
+            paddingLeft: "20px",
+            paddingRight: "20px",
+            width: "100%",
+          }}
+        />
+      ) : null}
       <div style={{ paddingTop: "10px", textAlign: "right" }}>
         {error ? (
           <Error error={error.message} />
