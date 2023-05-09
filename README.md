@@ -7,7 +7,7 @@ Simple calculator that can compute with units.
 ## Run
 1. Clone the repository
 ```
-git clone https://github.com/rhotter/dim-analysis-calculator.git
+git clone https://github.com/rhotter/kind-calc.git
 ```
 2. Install dependencies
 ```
