@@ -159,6 +159,9 @@ const preprocess = (latex) => {
     latex = latex.replaceAll(name, `{${value}}`);
   }
 
+  // add back protected strings
+  latex = decodeProtectedStrings(latex);
+
   // switch to SI units
   for (const [unitToReplace, conversion] of Object.entries(extendedUnits)) {
     let newExpression = "";
@@ -167,9 +170,6 @@ const preprocess = (latex) => {
     }
     latex = latex.replaceAll(`\\operatorname{${unitToReplace}}`, newExpression);
   }
-
-  // add back protected strings
-  latex = decodeProtectedStrings(latex);
 
   return latex;
 };
