@@ -101,7 +101,7 @@ const preprocess = (latex) => {
 
   // swap constants
   for (const [name, value] of Object.entries(constants)) {
-    latex = latex.replaceAll(name, value);
+    latex = latex.replaceAll(name, `{${value}}`);
   }
 
   // switch to SI units
