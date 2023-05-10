@@ -76,17 +76,6 @@ const getSupportedUnits = () => {
   return { units, extendedUnits };
 };
 
-const constants = {
-  "\\pi": `{${Math.PI}}`,
-  k_B: "1.380649 \\cdot 10^{-23} \\operatorname{J} \\operatorname{K}^{-1}",
-  "\\epsilon_0":
-    "8.85418782 \\cdot 10^{-12} {\\operatorname{m}^{-3}} {\\operatorname{kg}^{-1}} {\\operatorname{s}^4} {\\operatorname{A}^2}",
-  // c: "299792458 \\operatorname{m} \\operatorname{s}^{-1}",
-  // e: Math.E,
-  // "\\mu_0":
-  // "1.25663706212 \\cdot {10}^{−6} {\\operatorname{N}} {\\operatorname{A}^{−2}}",
-};
-
 const { units, extendedUnits } = getSupportedUnits();
 
 const protectedStrings = [
@@ -97,9 +86,64 @@ const protectedStrings = [
   "\\operatorname",
 ];
 
+const getProtectedStringsDictEncoding = () => {
+  // return a dict of protected strings to their encoded versions
+  // encode each string using "<", "~", and ">"
+  // this is a hacky way to make sure that the parser doesn't
+  // accidentally parse protected strings
+
+  const protectedStringsDict = {};
+  for (let i = 0; i < protectedStrings.length; i++) {
+    const string = protectedStrings[i];
+    const encodedString = "<" + "~".repeat(i + 5) + ">";
+    protectedStringsDict[string] = encodedString;
+  }
+  return protectedStringsDict;
+};
+
+const protectedStringsEncoding = getProtectedStringsDictEncoding();
+
+const encodeProtectedStrings = (latex) => {
+  // replace protected strings with encoded versions
+  for (const [string, encodedString] of Object.entries(
+    protectedStringsEncoding
+  )) {
+    latex = latex.replaceAll(string, encodedString);
+  }
+  return latex;
+};
+
+const decodeProtectedStrings = (latex) => {
+  // replace encoded strings with protected versions
+  for (const [string, encodedString] of Object.entries(
+    protectedStringsEncoding
+  )) {
+    latex = latex.replaceAll(encodedString, string);
+  }
+  return latex;
+};
+
+let constants = {
+  "\\pi": `${Math.PI}`,
+  k_B: "1.380649 \\cdot 10^{-23} \\operatorname{J} \\operatorname{K}^{-1}",
+  "\\epsilon_0":
+    "8.85418782 \\cdot 10^{-12} {\\operatorname{m}^{-3}} {\\operatorname{kg}^{-1}} {\\operatorname{s}^4} {\\operatorname{A}^2}",
+  c: "299792458 \\operatorname{m} \\operatorname{s}^{-1}",
+  e: `${Math.E}`,
+  // "\\mu_0":
+  // "1.25663706212 \\cdot {10}^{−6} {\\operatorname{N}} {\\operatorname{A}^{−2}}",
+};
+
+// encode protected strings
+constants = Object.fromEntries(
+  Object.entries(constants).map(([key, value]) => [
+    key,
+    encodeProtectedStrings(value),
+  ])
+);
+
 const preprocess = (latex) => {
   // ideally we would use a parser to do this, but this was easier
-  console.log(latex);
 
   // add braces to exponents
   latex = latex.replaceAll(/\^(\d+)/g, "^{ $1 }");
@@ -107,6 +151,8 @@ const preprocess = (latex) => {
   // remove \left and \right
   latex = latex.replaceAll("\\left", "");
   latex = latex.replaceAll("\\right", "");
+
+  latex = encodeProtectedStrings(latex);
 
   // swap constants
   for (const [name, value] of Object.entries(constants)) {
@@ -121,7 +167,10 @@ const preprocess = (latex) => {
     }
     latex = latex.replaceAll(`\\operatorname{${unitToReplace}}`, newExpression);
   }
-  console.log(latex);
+
+  // add back protected strings
+  latex = decodeProtectedStrings(latex);
+
   return latex;
 };
 
